@@ -2,6 +2,9 @@ name = "ergoflow-ai"
 compatibility_date = "2026-05-19"
 pages_build_output_dir = "dist"
 
+[build]
+command = "npm run build"
+
 [vars]
 NEXT_PUBLIC_APP_ENV = "production"
 # Note: You should configure NEXT_PUBLIC_GOOGLE_SCRIPT_URL and NEXT_PUBLIC_GOOGLE_SHEET_ID
