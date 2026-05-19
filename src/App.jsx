@@ -1369,96 +1369,8 @@ export default function App() {
               </div>
             </div>
 
-            {/* Global Interactive SVG World Map */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2 bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-4">
-                <div>
-                  <h3 className="text-sm font-extrabold text-white flex items-center gap-1.5">
-                    <MapPin className="h-4 w-4 text-cyan-400" /> Factory Telemetry Command Map
-                  </h3>
-                  <p className="text-xs text-slate-400">Click any plant node coordinate to switch factory focus.</p>
-                </div>
-
-                {/* SVG World Map */}
-                <div className="relative w-full border border-white/5 bg-slate-950/60 rounded-xl p-4 flex justify-center items-center shadow-inner h-[280px]">
-                  <svg viewBox="0 0 1000 500" className="w-full h-full select-none opacity-85">
-                    {/* World Map Grids */}
-                    <path d="M 0,250 H 1000 M 500,0 V 500" stroke="rgba(255,255,255,0.03)" strokeWidth="1" strokeDasharray="3,3" />
-                    
-                    {/* Simplified Continent Outlines */}
-                    <path d="M 120 120 L 220 110 L 290 200 L 200 350 L 140 280 Z" fill="rgba(51, 65, 85, 0.15)" stroke="rgba(71, 85, 105, 0.25)" strokeWidth="1" /> {/* North America */}
-                    <path d="M 220 360 L 270 380 L 320 480 L 250 490 Z" fill="rgba(51, 65, 85, 0.15)" stroke="rgba(71, 85, 105, 0.25)" strokeWidth="1" /> {/* South America */}
-                    <path d="M 450 120 L 580 90 L 590 180 L 540 280 L 460 210 Z" fill="rgba(51, 65, 85, 0.15)" stroke="rgba(71, 85, 105, 0.25)" strokeWidth="1" /> {/* Europe/Africa */}
-                    <path d="M 600 100 L 800 120 L 850 300 L 720 320 L 620 220 Z" fill="rgba(51, 65, 85, 0.15)" stroke="rgba(71, 85, 105, 0.25)" strokeWidth="1" /> {/* Asia */}
-
-                    {/* Glowing Plant Coordinates */}
-                    {ENTERPRISE_TENANTS.flatMap(c => c.plants.map(p => {
-                      const lat = p.coordinates[0];
-                      const lng = p.coordinates[1];
-                      // Mercator-ish mapping calculations
-                      const x = (lng + 180) * (1000 / 360);
-                      const y = (90 - lat) * (500 / 180);
-
-                      const isSelected = p.id === selectedPlantId;
-                      const color = p.status === 'critical' ? '#ef4444' : (p.status === 'warning' ? '#f59e0b' : '#10b981');
-                      const borderGlow = p.status === 'critical' ? 'rgba(239, 68, 68, 0.4)' : (p.status === 'warning' ? 'rgba(245, 158, 11, 0.4)' : 'rgba(16, 185, 129, 0.4)');
-
-                      return (
-                        <g key={p.id} className="cursor-pointer" onClick={() => { setSelectedCompanyId(c.id); setSelectedPlantId(p.id); }}>
-                          {/* Radar Pulse Ring */}
-                          <circle cx={x} cy={y} r="8" fill="none" stroke={color} className="radar-pulse-ring" />
-                          {/* Main node */}
-                          <circle cx={x} cy={y} r={isSelected ? "6" : "4"} fill={color} stroke="#000" strokeWidth="1.5" />
-                          {/* Tooltip text labels */}
-                          <text x={x + 10} y={y + 3} fill="#94a3b8" fontSize="8" fontFamily="monospace" fontWeight={isSelected ? "bold" : "normal"}>
-                            {p.location.split(',')[0]}
-                          </text>
-                        </g>
-                      );
-                    }))}
-                  </svg>
-                </div>
-              </div>
-
-              {/* Plant Health Inspector */}
-              <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-sm font-extrabold text-white uppercase tracking-wider font-mono">Selected Site Health</h3>
-                  <div className="mt-4 space-y-3">
-                    <div className="flex justify-between items-center bg-slate-950 p-2.5 rounded-lg border border-white/5">
-                      <span className="text-[10px] text-slate-400">Active Plant:</span>
-                      <span className="text-xs font-bold text-white">{activePlantObj.name}</span>
-                    </div>
-                    <div className="flex justify-between items-center bg-slate-950 p-2.5 rounded-lg border border-white/5">
-                      <span className="text-[10px] text-slate-400">Location:</span>
-                      <span className="text-xs font-bold text-white">{activePlantObj.location}</span>
-                    </div>
-                    <div className="flex justify-between items-center bg-slate-950 p-2.5 rounded-lg border border-white/5">
-                      <span className="text-[10px] text-slate-400">Plant Status:</span>
-                      <span className={`text-xs font-extrabold uppercase ${activePlantObj.status === 'critical' ? 'text-red-400' : (activePlantObj.status === 'warning' ? 'text-amber-400' : 'text-emerald-400')}`}>
-                        {activePlantObj.status}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-4 h-32">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart cx="50%" cy="50%" radius="80%" data={[
-                      { aspect: 'Posture', value: activePlantObj.status === 'critical' ? 35 : 85 },
-                      { aspect: 'Reach', value: activePlantObj.status === 'warning' ? 55 : 90 },
-                      { aspect: 'Force', value: 75 },
-                      { aspect: 'Audits', value: 95 }
-                    ]}>
-                      <PolarGrid stroke="#334155" />
-                      <PolarAngleAxis dataKey="aspect" tick={{ fill: '#94a3b8', fontSize: 8 }} />
-                      <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: '#475569', fontSize: 6 }} />
-                      <Radar name="Aspect Safety" dataKey="value" stroke="#06b6d4" fill="#06b6d4" fillOpacity={0.25} />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-            </div>
+            {/* Enterprise Risk Heatmap - World Map from ERGO */}
+            <EnterpriseRiskHeatmap />
 
             {/* Risk Trend & Heatmap Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -1491,8 +1403,7 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Enterprise Risk Heatmap from ERGO */}
-              <EnterpriseRiskHeatmap />
+
             </div>
 
             {/* Notifications Feed */}
