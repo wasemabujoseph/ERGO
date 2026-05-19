@@ -1,0 +1,193 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Premium High-Tech & Glassmorphic Utilities */
+.tech-grid {
+  background-image: 
+    linear-gradient(rgba(15, 23, 42, 0.93) 0%, rgba(15, 23, 42, 0.93) 100%),
+    radial-gradient(circle at center, rgba(6, 182, 212, 0.06) 0%, transparent 60%),
+    linear-gradient(rgba(51, 65, 85, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(51, 65, 85, 0.12) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 24px 24px, 24px 24px;
+}
+
+.glass-panel {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-glow-cyan:hover {
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.18), inset 0 0 16px rgba(6, 182, 212, 0.04);
+  transform: translateY(-2px);
+}
+
+.glass-panel-glow-purple:hover {
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.18), inset 0 0 16px rgba(168, 85, 247, 0.04);
+  transform: translateY(-2px);
+}
+
+.glass-panel-glow-emerald:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.18), inset 0 0 16px rgba(16, 185, 129, 0.04);
+  transform: translateY(-2px);
+}
+
+.glass-header {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Premium Gradients */
+.bg-gradient-cyber {
+  background: linear-gradient(135deg, #0b0f19 0%, #151030 50%, #030712 100%);
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-purple {
+  background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Micro-Animations & Telemetry Indicators */
+@keyframes pulse-radar {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-pulse-radar {
+  animation: pulse-radar 2.4s infinite cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glow-dot-high {
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.7);
+}
+
+.glow-dot-med {
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.7);
+}
+
+.glow-dot-low {
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.7);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.6);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.6);
+}
+
+/* Print CSS Styles for PDF Dossier Export */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11px !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .print-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    page-break-inside: avoid;
+  }
+  .text-gradient-cyan, .text-gradient-purple, .text-gradient-emerald {
+    background: none !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: initial !important;
+  }
+}
+
+/* Radar pulse animation for plant nodes */
+@keyframes radar-pulse {
+  0% {
+    r: 4px;
+    opacity: 1;
+    stroke-width: 1px;
+  }
+  50% {
+    opacity: 0.5;
+    stroke-width: 3px;
+  }
+  100% {
+    r: 12px;
+    opacity: 0;
+    stroke-width: 1px;
+  }
+}
+
+.radar-pulse-ring {
+  animation: radar-pulse 2s infinite ease-out;
+}
+
+/* SCADA-style rolling telemetry strip text keyframe */
+@keyframes scroll-telemetry {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.telemetry-ticker {
+  display: flex;
+  white-space: nowrap;
+  animation: scroll-telemetry 35s linear infinite;
+}
+
+.telemetry-ticker:hover {
+  animation-play-state: paused;
+}
+
+
