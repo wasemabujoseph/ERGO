@@ -68,6 +68,7 @@ import { getWorkstations, createWorkstation, updateWorkstation, ENTERPRISE_TENAN
 import { createAssessment } from './services/assessments.service';
 import { createCorrectiveAction } from './services/corrective-actions.service';
 import { createAIInsight } from './services/ai-insights.service';
+import EnterpriseRiskHeatmap from './components/analytics/EnterpriseRiskHeatmap';
 
 // REBA Table A (Neck vs Trunk vs Legs)
 const REBA_TABLE_A = {
@@ -1386,7 +1387,7 @@ export default function App() {
                       { month: 'Feb', avgRisk: 42 },
                       { month: 'Mar', avgRisk: 35 },
                       { month: 'Apr', avgRisk: 68 },
-                      { month: 'May', avgRisk: activePlantObj.status === 'critical' ? 82 : 48 }
+                      { month: 'May', avgRisk: 48 }
                     ]}>
                       <defs>
                         <linearGradient id="colorRisk" x1="0" y1="0" x2="0" y2="1">
