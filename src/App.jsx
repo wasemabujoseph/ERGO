@@ -1491,32 +1491,8 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Hour-based Risk Exposure Heatmap Grid */}
-              <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-4">
-                <div>
-                  <h3 className="text-sm font-extrabold text-white">Risk Exposure Heatmap</h3>
-                  <p className="text-xs text-slate-400">Shift exposure hour risks (H1 to H8)</p>
-                </div>
-
-                <div className="grid grid-cols-8 gap-2 pt-2">
-                  {[...Array(24)].map((_, i) => {
-                    const hrs = (i % 8) + 1;
-                    const isHigh = i === 4 || i === 12 || i === 18;
-                    const isMed = i === 2 || i === 9 || i === 17;
-                    const color = isHigh ? 'bg-rose-500/70 border-rose-500' : (isMed ? 'bg-amber-500/60 border-amber-500' : 'bg-emerald-500/40 border-emerald-500');
-                    return (
-                      <div key={i} className={`h-8 rounded border flex flex-col items-center justify-center font-mono text-[9px] font-bold ${color}`} title={`Hour ${hrs} Risk Profile`}>
-                        H{hrs}
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="flex justify-between text-[8px] text-slate-500 uppercase font-mono">
-                  <span>Shift A</span>
-                  <span>Shift B</span>
-                  <span>Shift C</span>
-                </div>
-              </div>
+              {/* Enterprise Risk Heatmap from ERGO */}
+              <EnterpriseRiskHeatmap />
             </div>
 
             {/* Notifications Feed */}
