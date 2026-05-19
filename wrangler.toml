@@ -1,8 +1,0 @@
-name = "ergoflow-ai"
-compatibility_date = "2026-05-19"
-pages_build_output_dir = "dist"
-
-[vars]
-NEXT_PUBLIC_APP_ENV = "production"
-# Note: You should configure NEXT_PUBLIC_GOOGLE_SCRIPT_URL and NEXT_PUBLIC_GOOGLE_SHEET_ID
-# in the Cloudflare Pages Dashboard under Settings -> Environment Variables.
